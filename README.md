@@ -13,7 +13,7 @@ Dedicated Cart Page with order summary
 Per-item total and dynamic subtotal/discount/total
 10% discount applied to subtotal
 Search box, category filter
-Navbar with Home, centered Search, Cart badge, Profile menu
+Navbar with centered Search, Cart badge, Profile menu
 
 
 ## 🧰 Tech Stack
