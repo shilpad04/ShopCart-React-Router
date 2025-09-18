@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Navbar({
@@ -11,16 +11,7 @@ function Navbar({
   onSearch,
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
-  const navigate = useNavigate();
   const cap = (s) => (typeof s === "string" && s.length ? s[0].toUpperCase() + s.slice(1) : s);
-
-  const handleMobileCategory = (val) => {
-    if (val === "home") {
-      navigate("/");
-      return;
-    }
-    onCategoryChange && onCategoryChange(val);
-  };
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-emerald-900/40 bg-emerald-900/30 border-b border-emerald-800">
@@ -33,6 +24,7 @@ function Navbar({
             SHOPCART
           </Link>
 
+          {/* search*/}
           <div className="flex-1 flex items-center justify-center">
             <input
               type="text"
@@ -43,6 +35,7 @@ function Navbar({
             />
           </div>
 
+          {/* cart + profile */}
           <div className="shrink-0 flex items-center gap-2">
             <button
               type="button"
@@ -85,14 +78,14 @@ function Navbar({
           </div>
         </div>
 
+        {/* categories row */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-[34rem] flex flex-col items-center">
             <select
               value={selectedCategory}
-              onChange={(e) => handleMobileCategory(e.target.value)}
+              onChange={(e) => onCategoryChange && onCategoryChange(e.target.value)}
               className="flex md:hidden w-full rounded-lg bg-white/90 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
-              <option value="home">Home</option>
               <option value="">{cap("all categories")}</option>
               {categories.map((c) => (
                 <option key={c} value={c}>{cap(c)}</option>
@@ -100,7 +93,6 @@ function Navbar({
             </select>
 
             <div className="hidden md:flex flex-wrap justify-center gap-4 mt-2">
-              <Link to="/" className="text-sm text-slate-200 hover:text-emerald-300">Home</Link>
               <button
                 onClick={() => onCategoryChange && onCategoryChange("")}
                 className={`text-sm ${selectedCategory === "" ? "text-emerald-300 font-semibold" : "text-slate-200 hover:text-emerald-300"}`}
