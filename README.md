@@ -2,7 +2,7 @@
 
 A simple, responsive e-commerce UI that fetches products from the Fake Store API, shows them on a grid, supports a quick Cart modal and a full Cart page, quantity controls, per-item totals, and a 10% discount on the order total. Clean layout, Google Fonts, and Font Awesome icons via CDN.
 
-✨ Features
+## ✨ Features
 
 Product list from Fake Store API (/products)
 Responsive product grid
@@ -16,8 +16,7 @@ Search box, category filter
 Navbar with Home, centered Search, Cart badge, Profile menu
 
 
-🧰 Tech Stack
----
+## 🧰 Tech Stack
 React + Vite
 React Router v6
 Tailwind CSS via CDN
@@ -25,7 +24,7 @@ Google Fonts via CDN
 Font Awesome 7 via CDN
 Fake Store API
 
-🚀 Quick Start
+## 🚀 Quick Start
 
 # 1) Create the app
 npm create vite@latest shopcart -- --template react
@@ -41,7 +40,7 @@ npm run dev
 
 Open the URL that Vite prints (e.g., http://localhost:5173).
 
-📁 Project Structure
+## 📁 Project Structure
 
 shopcart/
   index.html
@@ -60,13 +59,13 @@ shopcart/
       Home.jsx
       CartPage.jsx
       
-🔌 API
+## 🔌 API
 
 Base: https://fakestoreapi.com
 
 Products: GET /products
 
-🧭 Routing
+## 🧭 Routing
 / → Home: Product grid, Product Details modal
 
 /cart → CartPage: Full checkout view with totals
@@ -75,7 +74,7 @@ Navigation:
 Home link in Navbar category row (desktop and mobile)
 Cart icon opens Cart modal; modal’s Checkout button navigates to /cart
 
-🧠 State & Data Flow
+## 🧠 State & Data Flow
 
 App.jsx holds global state:
 products: fetched once on mount
@@ -89,7 +88,7 @@ removeFromCart(id)
 increaseQty(id) / decreaseQty(id)
 Adding the same product again increases its quantity.
 
-🧩 Components Overview
+## 🧩 Components Overview
 Navbar:
 Logo, centered Search, Cart with badge, Profile menu
 Category row:
@@ -113,7 +112,7 @@ CartPage:
 Full list with same controls as modal
 Sticky order summary on large screens; mobile-friendly with wrapping rows
 
-##🧪 Scripts
+## 🧪 Scripts
 
 npm run dev     # start dev server
 npm run build   # production build
@@ -121,7 +120,7 @@ npm run preview # preview production build
 
 Since Tailwind is via CDN, you don’t need Tailwind build tooling for this version.
 
-✅ Requirement Checklist
+## ✅ Requirement Checklist
 
  Fetch list of products from Fake Store API
  Display products in a responsive grid
@@ -136,6 +135,3 @@ Since Tailwind is via CDN, you don’t need Tailwind build tooling for this vers
  Cart modal + dedicated Cart page
  Google Font + Font Awesome CDN
  
-
-📜 License
-MIT — use and modify freely for learning or projects.
