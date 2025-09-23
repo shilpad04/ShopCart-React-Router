@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Navbar({
@@ -12,6 +12,13 @@ function Navbar({
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const cap = (s) => (typeof s === "string" && s.length ? s[0].toUpperCase() + s.slice(1) : s);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleCategorySelect = (value) => {
+    onCategoryChange && onCategoryChange(value);
+    if (location.pathname === "/cart") navigate("/product");
+  };
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-emerald-900/40 bg-emerald-900/30 border-b border-emerald-800">
@@ -24,7 +31,6 @@ function Navbar({
             SHOPCART
           </Link>
 
-          {/* search*/}
           <div className="flex-1 flex items-center justify-center">
             <input
               type="text"
@@ -35,13 +41,19 @@ function Navbar({
             />
           </div>
 
-          {/* cart + profile */}
-          <div className="shrink-0 flex items-center gap-2">
+          <div className="shrink-0 flex items-center gap-3">
+            <Link
+              to="/product"
+              className="inline-flex items-center rounded-xl bg-slate-800/70 px-3 h-9 sm:h-11 text-slate-100 hover:bg-slate-700"
+            >
+              Product
+            </Link>
+
             <button
               type="button"
               onClick={onCartClick}
               aria-label="Open cart"
-              className="relative inline-flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-emerald-700/80 text-white shadow-sm hover:bg-emerald-700 transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+              className="relative inline-flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-emerald-700/80 text-white shadow-sm hover:bg-emerald-700 transition active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               title="Cart"
             >
               <i className="fa-solid fa-cart-shopping text-sm sm:text-lg" />
@@ -49,41 +61,14 @@ function Navbar({
                 {cartCount >= 10 ? "9+" : cartCount}
               </span>
             </button>
-
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setProfileOpen((v) => !v)}
-                aria-haspopup="menu"
-                aria-expanded={profileOpen}
-                className="inline-flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-slate-200 text-slate-800 hover:bg-slate-300 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-                title="Profile"
-              >
-                <i className="fa-solid fa-user text-sm sm:text-base" />
-              </button>
-
-              {profileOpen && (
-                <div
-                  role="menu"
-                  className="absolute right-0 mt-2 w-40 sm:w-44 overflow-hidden rounded-xl border border-slate-800 bg-slate-900 text-slate-200 shadow-xl"
-                >
-                  <button className="w-full text-left px-4 py-2 hover:bg-slate-800">Profile</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-slate-800">Orders</button>
-                  <button className="w-full text-left px-4 py-2 hover:bg-slate-800">Settings</button>
-                  <div className="h-px bg-slate-800" />
-                  <button className="w-full text-left px-4 py-2 text-red-300 hover:bg-slate-800">Logout</button>
-                </div>
-              )}
-            </div>
           </div>
         </div>
 
-        {/* categories row */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-[34rem] flex flex-col items-center">
             <select
               value={selectedCategory}
-              onChange={(e) => onCategoryChange && onCategoryChange(e.target.value)}
+              onChange={(e) => handleCategorySelect(e.target.value)}
               className="flex md:hidden w-full rounded-lg bg-white/90 px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
               <option value="">{cap("all categories")}</option>
@@ -94,7 +79,7 @@ function Navbar({
 
             <div className="hidden md:flex flex-wrap justify-center gap-4 mt-2">
               <button
-                onClick={() => onCategoryChange && onCategoryChange("")}
+                onClick={() => handleCategorySelect("")}
                 className={`text-sm ${selectedCategory === "" ? "text-emerald-300 font-semibold" : "text-slate-200 hover:text-emerald-300"}`}
               >
                 {cap("all")}
@@ -102,7 +87,7 @@ function Navbar({
               {categories.map((c) => (
                 <button
                   key={c}
-                  onClick={() => onCategoryChange && onCategoryChange(c)}
+                  onClick={() => handleCategorySelect(c)}
                   className={`text-sm ${selectedCategory === c ? "text-emerald-300 font-semibold" : "text-slate-200 hover:text-emerald-300"}`}
                 >
                   {cap(c)}

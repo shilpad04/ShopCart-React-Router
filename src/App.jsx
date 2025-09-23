@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Cart from "./components/Cart";
 import Home from "./pages/Home";
 import CartPage from "./pages/CartPage";
 import "./App.css";
@@ -12,7 +11,6 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const [cart, setCart] = useState([]);
-  const [showCart, setShowCart] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -81,19 +79,6 @@ function App() {
   const discount = useMemo(() => subtotal * 0.1, [subtotal]);
   const total = useMemo(() => Math.max(subtotal - discount, 0), [subtotal, discount]);
 
-  const onCheckoutFromModal = () => {
-    setShowCart(false);
-    navigate("/cart");
-  };
-
-  if (loading) {
-    return (
-      <h1 className="min-h-screen flex items-center justify-center text-slate-200">
-        Data is loading please wait
-      </h1>
-    );
-  }
-
   if (error) {
     return (
       <h1 className="min-h-screen flex items-center justify-center text-red-300">
@@ -105,7 +90,7 @@ function App() {
   return (
     <div className="min-h-screen">
       <Navbar
-        onCartClick={() => setShowCart(true)}
+        onCartClick={() => navigate("/cart")}
         cartCount={cartCount}
         categories={categories}
         selectedCategory={selectedCategory}
@@ -117,6 +102,17 @@ function App() {
       <Routes>
         <Route
           path="/"
+          element={
+            <Home
+              products={products}
+              searchTerm={searchTerm}
+              selectedCategory={selectedCategory}
+              onAddCart={addToCart}
+            />
+          }
+        />
+        <Route
+          path="/product"
           element={
             <Home
               products={products}
@@ -141,20 +137,6 @@ function App() {
           }
         />
       </Routes>
-
-      {showCart && (
-        <Cart
-          cart={cart}
-          onClose={() => setShowCart(false)}
-          onRemoveFromCart={removeFromCart}
-          increaseQty={increaseQty}
-          decreaseQty={decreaseQty}
-          subtotal={subtotal}
-          discount={discount}
-          total={total}
-          onCheckout={onCheckoutFromModal}
-        />
-      )}
     </div>
   );
 }

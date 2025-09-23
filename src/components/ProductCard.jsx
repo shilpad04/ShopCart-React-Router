@@ -13,6 +13,10 @@ function ProductCard({ product, onAddCart, onView, inCart }) {
           {product.title}
         </h2>
 
+        <p className="mt-2 text-xs sm:text-sm text-slate-300 line-clamp-3">
+          {product.description}
+        </p>
+
         <div className="mt-auto pt-3 flex items-center justify-between" onClick={(e) => e.stopPropagation()}>
           <p className="text-lg font-bold text-emerald-300">${product.price}</p>
 
