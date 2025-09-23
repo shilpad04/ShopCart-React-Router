@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import CartPage from "./pages/CartPage";
+import ProductPage from "./pages/ProductPage";
 import "./App.css";
 
 function App() {
@@ -119,6 +120,17 @@ function App() {
               searchTerm={searchTerm}
               selectedCategory={selectedCategory}
               onAddCart={addToCart}
+            />
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <ProductPage
+              products={products}
+              onAddCart={addToCart}
+              onRemoveFromCart={removeFromCart}
+              cart={cart}
             />
           }
         />

@@ -1,9 +1,7 @@
 import { useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import ProductDetails from "../components/ProductDetails";
 
 function Home({ products, searchTerm, selectedCategory, onAddCart }) {
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [cartIds, setCartIds] = useState(new Set());
 
   const filtered = useMemo(() => {
@@ -13,9 +11,6 @@ function Home({ products, searchTerm, selectedCategory, onAddCart }) {
       return byCat && bySearch;
     });
   }, [products, selectedCategory, searchTerm]);
-
-  const openProductDetails = (product) => setSelectedProduct(product);
-  const closeProductDetails = () => setSelectedProduct(null);
 
   const handleAdd = (product, qty = 1) => {
     onAddCart(product, qty);
@@ -42,21 +37,10 @@ function Home({ products, searchTerm, selectedCategory, onAddCart }) {
             key={p.id}
             product={p}
             onAddCart={handleAdd}
-            onView={openProductDetails}
             inCart={cartIds.has(p.id)}
           />
         ))}
       </div>
-
-      {selectedProduct && (
-        <ProductDetails
-          product={selectedProduct}
-          onClose={closeProductDetails}
-          onAddCart={handleAdd}
-          inCart={cartIds.has(selectedProduct.id)}
-          onRemove={(id) => handleRemoveFlag(id)}
-        />
-      )}
     </div>
   );
 }
