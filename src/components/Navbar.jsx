@@ -46,7 +46,7 @@ function Navbar({
               to="/product"
               className="inline-flex items-center rounded-xl bg-slate-800/70 px-3 h-9 sm:h-11 text-slate-100 hover:bg-slate-700"
             >
-              Product
+              Products
             </Link>
 
             <button
